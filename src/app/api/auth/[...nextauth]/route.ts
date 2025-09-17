@@ -14,7 +14,7 @@ const handler = NextAuth({
       async authorize(credentials) {
         // This is where you'd connect to a database to validate credentials.
         // For this example, we'll use hardcoded credentials.
-        if (credentials?.username === 'adminn' && credentials?.password === 'password123') {
+        if (credentials?.username === 'admin' && credentials?.password === 'password123') {
           return { id: "1", name: "Admin", email: "admin@example.com" };
         }
         return null;

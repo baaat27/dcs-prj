@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
+import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
+  const { data: session, status } = useSession();
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
@@ -15,7 +15,6 @@ export default function DashboardPage() {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    const session = await getServerSession(authOptions);
 
     try {
       const response = await fetch('/api/products', {
