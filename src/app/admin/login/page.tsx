@@ -16,16 +16,21 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await signIn("credentials", {
-      redirect: false,
-      username,
-      password,
-    });
-
-    if (result?.error) {
-      setError("ログインに失敗しました。");
-    } else {
-      router.push("/admin/dashboard");
+    setLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        username,
+        password,
+        redirect: true,
+        callbackUrl: "/admin/dashboard",
+      });
+      if (result?.error) {
+        setError("Invalid username or password");
+        setLoading(false);
+      }
+    } catch (error) {
+      setError("An unexpected error occurred.");
+      setLoading(false);
     }
   };
 
