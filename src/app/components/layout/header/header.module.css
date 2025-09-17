@@ -1,0 +1,53 @@
+.header {
+    /* 背景色と文字色 */
+    background-color: #333;
+    color: #fff;
+    
+    /* フレックスボックスを使ってコンテンツを水平方向に並べる */
+    display: flex;
+    justify-content: space-between; /* 両端に配置 */
+    align-items: center; /* 垂直方向の中央揃え */
+    
+    /* 内部の余白 */
+    padding: 1rem 2rem;
+}
+
+/* --- サイト名・ロゴのスタイル --- */
+.header h1 {
+    /* マージンをリセット */
+    margin: 0;
+}
+
+.header a {
+    /* リンクの下線をなくす */
+    text-decoration: none;
+    /* リンクの文字色を親要素から継承 */
+    color: inherit;
+}
+
+/* --- ナビゲーションのスタイル --- */
+.nav ul {
+    /* リストのマーカー（・）を消す */
+    list-style: none;
+    /* マージンとパディングをリセット */
+    margin: 0;
+    padding: 0;
+
+    /* フレックスボックスでリストアイテムを横並びに */
+    display: flex;
+    gap: 1.5rem; /* アイテム間の隙間 */
+}
+
+/* --- ナビゲーションリンクのスタイル --- */
+.nav a {
+    /* リンクの下線をなくす */
+    text-decoration: none;
+    color: #fff;
+    /* ホバー時の色変更を滑らかにする */
+    transition: color 0.3s ease;
+}
+
+.nav a:hover {
+    /* ホバー時の文字色 */
+    color: #37bb1d;
+}

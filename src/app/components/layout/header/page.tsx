@@ -1,0 +1,21 @@
+import styles from "./header.module.css";
+
+
+export default function Header() {
+  return (
+        <header className={styles.header}>
+        <a href="/">
+            <h1>ウェブサイト</h1>
+        </a>
+
+        <nav className={styles.nav}>
+            <ul>
+                <li><a href="/">ホーム</a></li>
+                <li><a href="/about">アバウト</a></li>
+                <li><a href="/services">サービス</a></li>
+                <li><a href="/contact">お問い合わせ</a></li>
+            </ul>
+        </nav>
+        </header>
+  );
+}
