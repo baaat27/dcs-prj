@@ -17,14 +17,18 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+
     try {
       const result = await signIn("credentials", {
         username,
         password,
-        redirect: true,
-        callbackUrl: "/admin/dashboard",
+        redirect: false,
       });
-      if (result?.error) {
+
+      if (result?.ok) {
+        router.push("/admin/dashboard");
+      } else {
         setError("Invalid username or password");
         setLoading(false);
       }
