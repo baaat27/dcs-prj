@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import styles from "./header.module.css";
-
+import Link from 'next/link';
 
 export default function Header() {
   const { data: session, status } = useSession();
@@ -15,10 +15,10 @@ export default function Header() {
 
         <nav className={styles.nav}>
             <ul>
-                <li><a href="/">ホーム</a></li>
-                <li><a href="/about">アバウト</a></li>
-                <li><a href="/services">サービス</a></li>
-                <li><a href="/contact">お問い合わせ</a></li>
+                <li><Link href="/">ホーム</Link></li>
+                <li><Link href="/about">アバウト</Link></li>
+                <li><Link href="/services">サービス</Link></li>
+                <li><Link href="/contact">お問い合わせ</Link></li>
                 {status === 'authenticated' && (
                   <li>
                     <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className={styles.logoutButton}>
