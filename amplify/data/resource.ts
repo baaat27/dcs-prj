@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { Product, ProductStackHistory } from 'aws-cdk-lib/aws-servicecatalog';
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -7,9 +8,16 @@ specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+  Products: a
     .model({
-      content: a.string(),
+      owner:a.string(),
+      name: a.string().required(),
+      price:a.integer().required(),
+      description: a.string(),
+      stock: a.integer().default(0),
+      adddate:a.datetime(),
+      updateDate:a.datetime()
+
     })
     .authorization((allow) => [allow.guest()]),
 });
