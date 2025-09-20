@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import styles from "./sidebar.module.css"
-
+import Link from 'next/link';
 
 export default function Sidebar() {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -16,9 +16,9 @@ export default function Sidebar() {
             <nav className={styles.sidebarNav}>
                 <h3>カテゴリー</h3>
                 <ul>
-                    <li><a href="/category1">カテゴリー 1</a></li>
-                    <li><a href="/category2">カテゴリー 2</a></li>
-                    <li><a href="/category3">カテゴリー 3</a></li>
+                    <li><Link href="/category1">カテゴリー 1</Link></li>
+                    <li><Link href="/category2">カテゴリー 2</Link></li>
+                    <li><Link href="/category3">カテゴリー 3</Link></li>
                 </ul>
             </nav>
         </aside>
