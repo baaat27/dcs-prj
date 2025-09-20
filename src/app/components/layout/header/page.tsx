@@ -9,9 +9,9 @@ export default function Header() {
 
   return (
         <header className={styles.header}>
-        <a href="/">
+        <Link href="/">
             <h1>ウェブサイト</h1>
-        </a>
+        </Link>
 
         <nav className={styles.nav}>
             <ul>
