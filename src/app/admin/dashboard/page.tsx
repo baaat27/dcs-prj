@@ -1,15 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from "next-auth/react";
+import ProtectedRoute from "../../components/ProtectedRoute";
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +47,7 @@ export default function DashboardPage() {
   };
 
   return (
+    <ProtectedRoute requiredGroup="admin">
     <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
       <h1>管理者ダッシュボード</h1>
       <p>ここから新しい商品を追加できます。</p>
@@ -88,5 +89,6 @@ export default function DashboardPage() {
         </button>
       </form>
     </div>
+    </ProtectedRoute>
   );
 }

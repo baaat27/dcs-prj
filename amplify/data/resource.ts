@@ -15,8 +15,6 @@ const schema = a.schema({
       price:a.integer().required(),
       description: a.string(),
       stock: a.integer().default(0),
-      adddate:a.datetime(),
-      updateDate:a.datetime()
 
     })
     .authorization((allow) => [allow.guest()]),
