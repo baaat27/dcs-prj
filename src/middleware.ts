@@ -1,13 +1,13 @@
 // middleware.ts
 import { type NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser } from 'aws-amplify/auth/server';
-import { runWithAmplifyServerContext } from './app/utils/amplify-server'; // ステップ1で作成
+// 👇 fetchAuthSession をサーバーサイドからインポート
+import { fetchAuthSession } from 'aws-amplify/auth/server';
+import { runWithAmplifyServerContext } from './app/utils/amplify-server';
 
-// このconfigで、Middlewareをどのページで実行するかを指定します
 export const config = {
   matcher: [
     /*
-     * マッチするパス:
+     * Middlewareを実行するパス:
      * - /admin または /user で始まるすべてのパス
      */
     '/admin/:path*',
@@ -16,26 +16,44 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
-  // runWithAmplifyServerContextでラップして、サーバーサイドでAmplifyを安全に使う
+  const response = NextResponse.next();
+  // アクセスしようとしているページのパスを取得 (例: '/admin/dashboard')
+  const { pathname } = request.nextUrl; 
+
   return await runWithAmplifyServerContext({
-    nextServerContext: { request } as any,
+    nextServerContext: { request, response },
     operation: async (contextSpec) => {
       try {
-        // サーバーサイドで現在のユーザーを取得しようと試みる
-        const user = await getCurrentUser(contextSpec);
-        console.log('認証済みユーザー:', user.userId);
-        // 成功すれば、そのまま目的のページへ進む
-        return NextResponse.next();
-      } catch (error) {
-        // getCurrentUserがエラーを投げた場合 = 未ログイン
-        console.log('未認証のアクセスを検知。サインインページにリダイレクトします。');
+        // 1. ユーザーセッション（トークン情報など）を取得
+        const session = await fetchAuthSession(contextSpec);
         
-        // リダイレクト先のURLを作成
-        const signInUrl = new URL('/signin', request.url);
-        
-        // ログイン後に元のページに戻れるよう、リダイレクト元をクエリパラメータに付与
-        signInUrl.searchParams.set('redirect_to', request.url);
+        // ログインしていない場合はここでcatchに飛ぶので、以下はログイン済みユーザーの処理
+        const groups = (session.tokens?.accessToken.payload['cognito:groups'] as string[]) || [];
+        console.log(`[Middleware] Path: ${pathname}, Groups: ${groups.join(', ')}`);
 
+        // 2. Adminページへのアクセス制御
+        // '/admin'で始まるパスにアクセスしようとしているが、'admin'グループに所属していない場合
+        if (pathname.startsWith('/admin') && !groups.includes('admin')) {
+          console.log('[Middleware] Access Denied: Admin role required.');
+          // ホームページにリダイレクト
+          return NextResponse.redirect(new URL('/', request.url));
+        }
+
+        // 3. Userページへのアクセス制御 (もしAdminはUserページを見れないようにする場合)
+        // if (pathname.startsWith('/user') && !groups.includes('user')) {
+        //   console.log('[Middleware] Access Denied: User role required.');
+        //   return NextResponse.redirect(new URL('/', request.url));
+        // }
+
+        // 4. すべてのチェックを通過した場合、そのまま目的のページを表示
+        return response;
+
+      } catch (error) {
+        // 5. 未ログインの場合はサインインページへリダイレクト
+        console.log('[Middleware] Unauthenticated access detected.');
+        const signInUrl = new URL('/signin', request.url);
+        // ログイン後に元のページに戻れるように、リダイレクト元のパスをクエリパラメータに付与
+        signInUrl.searchParams.set('redirect_to', pathname);
         return NextResponse.redirect(signInUrl);
       }
     },

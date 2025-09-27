@@ -28,23 +28,26 @@ export default function SignUp() {
         options: { userAttributes: { email } },
       });
       setStep(2);
-    } catch (err: any) { // errorをany型として受け取る
+  } catch (err: unknown) {
+    // 👇 errがErrorオブジェクトかを確認
+    if (err instanceof Error) {
       console.error('サインアップエラー:', err);
-
-      // ここでエラーの種類を判定します
+      // err.nameに安全にアクセスできる
       if (err.name === 'InvalidPasswordException') {
-        // パスワードポリシー違反の場合
         setError('パスワードは8文字以上で、大文字、小文字、数字、記号を含めてください。');
       } else if (err.name === 'UsernameExistsException') {
-        // メールアドレスが既に使用されている場合
         setError('このメールアドレスは既に使用されています。');
       } else {
-        // その他の一般的なエラー
         setError('登録中にエラーが発生しました。もう一度お試しください。');
       }
+    } else {
+      // Errorオブジェクト以外がthrowされた場合の予備処理
+      console.error('予期せぬエラー形式:', err);
+      setError('予期せぬエラーが発生しました。');
     }
   }
-
+  }
+  
   async function handleConfirmation(e: React.FormEvent) {
     e.preventDefault();
     setError(null); // クリア
@@ -65,6 +68,10 @@ export default function SignUp() {
           <h2>新規登録</h2>
           <input type="email" placeholder="メールアドレス" onChange={e => setEmail(e.target.value)} />
           <input type="password" placeholder="パスワード" onChange={e => setPassword(e.target.value)} />
+          <div>
+            <label>パスワード（確認用）:</label>
+            <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+          </div>
           {/* 👇 エラーメッセージを画面に表示 */}
           {error && <p style={{ color: 'red', border: '1px solid red', padding: '10px' }}>{error}</p>}
           <button type="submit">登録</button>

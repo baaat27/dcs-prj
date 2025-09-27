@@ -20,7 +20,7 @@ export default function SignIn() {
       const session = await fetchAuthSession();
       
       // 3. セッショントークンからユーザーグループを取得
-      const groups = (session.tokens?.accessToken.payload['cognito:groups'] as String[]) || [];
+      const groups = (session.tokens?.accessToken.payload['cognito:groups'] as string[]) || [];
       
       // 4. グループに応じてリダイレクト先を振り分け
       if (groups.includes('admin')) {
