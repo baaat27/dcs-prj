@@ -8,7 +8,7 @@ specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Products: a
+  Product: a
     .model({
       owner:a.string(),
       name: a.string().required(),
@@ -37,7 +37,7 @@ const schema = a.schema({
       productId: a.id().required(),
       categoryId: a.id().required(),
       // `belongsTo` を使って、各々がどの親モデルに属するかを定義します。
-      products: a.belongsTo('Product', 'productId'),
+      product: a.belongsTo('Product', 'productId'),
       category: a.belongsTo('Category', 'categoryId'),
     })
     .authorization((allow) => [allow.publicApiKey()]),
