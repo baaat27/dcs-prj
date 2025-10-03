@@ -15,9 +15,32 @@ const schema = a.schema({
       price:a.integer().required(),
       description: a.string(),
       stock: a.integer().default(0),
+      imageKey: a.string(),
+      categories: a.hasMany('ProductCategory', 'productId'),
+    })
+    .authorization(allow => [allow.guest()]),
 
+    Category: a
+    .model({
+      // 'Products12'モデルへの参照 (どの商品か)
+      name: a.string().required(),
+      // こちらも同様に `hasMany` を使って関係を定義します。
+      // 「一つのカテゴリは、多くの中間データ(ProductCategory)を持つ」という意味です。
+      // 'categoryId' は、ProductCategoryモデル内でこのカテゴリを指し示すためのキーです。
+      products: a.hasMany('ProductCategory', 'categoryId'),
     })
     .authorization((allow) => [allow.guest()]),
+
+    ProductCategory: a
+    .model({
+      // 関連先のIDフィールドを明示的に定義します。
+      productId: a.id().required(),
+      categoryId: a.id().required(),
+      // `belongsTo` を使って、各々がどの親モデルに属するかを定義します。
+      product: a.belongsTo('Product', 'productId'),
+      category: a.belongsTo('Category', 'categoryId'),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
