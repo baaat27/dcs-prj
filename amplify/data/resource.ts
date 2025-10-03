@@ -37,7 +37,7 @@ const schema = a.schema({
       productId: a.id().required(),
       categoryId: a.id().required(),
       // `belongsTo` を使って、各々がどの親モデルに属するかを定義します。
-      product: a.belongsTo('Product', 'productId'),
+      products: a.belongsTo('Product', 'productId'),
       category: a.belongsTo('Category', 'categoryId'),
     })
     .authorization((allow) => [allow.publicApiKey()]),

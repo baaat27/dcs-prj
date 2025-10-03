@@ -23,7 +23,7 @@ export default function CreateCategoryForm() {
 
     try {
       // APIからの返り値に 'errors' も含める
-      const { data: newCategory, errors } = await client.models.Category.create({
+      const { data: newCategory, errors } = await client.models.Categories.create({
         name: categoryName,
       });
 
@@ -34,7 +34,7 @@ export default function CreateCategoryForm() {
 
       // 👇 if文でnewCategoryがnullでないことを確認
       if (newCategory) {
-        alert(`カテゴリ「${newCategories.name}」を新しく追加しました！`);
+        alert(`カテゴリ「${newCategory.name}」を新しく追加しました！`);
         setCategoryName(''); // 成功した場合のみフォームをリセット
       } else {
         // このケースは稀ですが、念のためハンドルします
