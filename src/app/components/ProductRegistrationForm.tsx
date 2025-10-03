@@ -75,7 +75,7 @@ export default function ProductRegistrationForm() {
       const imageKey = uploadResult.path;
 
       // 2. 商品情報をDynamoDBに登録 (モデル名は複数形の'Products'を使用)
-      const { data: newProduct } = await client.models.Products.create({
+      const { data: newProduct } = await client.models.Product.create({
         name: productName,
         price: price,
         description: description,
