@@ -9,7 +9,7 @@ import CreateCategoryForm from "./components/CreateCategoryForm";
 export default function Home() {
   return (
 
-    <div className={'{Styles.page}{Styles.flexcontainer}'}>
+    <div className={`${Styles.page} ${Styles.flexcontainer}`}>
       <div className={Styles.sidebar}><Sidebar /></div>
       <main className={Styles.main}>
       <ProductRegistrationForm />
