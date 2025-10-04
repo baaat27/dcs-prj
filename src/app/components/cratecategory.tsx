@@ -1,10 +1,9 @@
-// components/CreateCategoryForm.tsx
 "use client";
-
 import { useState } from 'react';
 import { generateClient } from 'aws-amplify/data';
-import {type  Schema } from '../../../amplify/data/resource';
+import { data, type Schema } from '../../../amplify/data/resource';
 
+// Amplifyクライアントを生成
 const client = generateClient<Schema>();
 
 export default function CreateCategoryForm() {
@@ -14,7 +13,6 @@ export default function CreateCategoryForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-     console.log("利用可能なモデル:", client.models);
     if (!categoryName) {
       setError('カテゴリ名を入力してください。');
       return;
@@ -23,20 +21,18 @@ export default function CreateCategoryForm() {
     setError(null);
 
     try {
-      // APIからの返り値に 'errors' も含める
+      // client.models.Categories.create() を使って新しいカテゴリを作成
       const { data: newCategory, errors } = await client.models.Categories.create({
         name: categoryName,
       });
-
-      // APIレベルでのエラーがあれば、catchブロックに投げる
+      console.log("デバッグ: client.models の内容クリエイト:", client.models);
       if (errors) {
         throw new Error(errors.map(e => e.message).join('\n'));
       }
 
-      // 👇 if文でnewCategoryがnullでないことを確認
       if (newCategory) {
         alert(`カテゴリ「${newCategory.name}」を新しく追加しました！`);
-        setCategoryName(''); // 成功した場合のみフォームをリセット
+        setCategoryName(''); // フォームをリセット
       } else {
         // このケースは稀ですが、念のためハンドルします
         setError('カテゴリの作成リクエストは成功しましたが、応答が空でした。');

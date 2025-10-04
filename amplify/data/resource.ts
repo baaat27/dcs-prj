@@ -11,18 +11,18 @@ const schema = a.schema({
       imageKey: a.string(),
       categories: a.hasMany('ProductCategories', 'productId'),
     })
-    .authorization((allow) => [allow.publicApiKey()]), 
+    .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
   tests: a
     .model({
     test1: a.string(),
     })
-   .authorization((allow) => [allow.publicApiKey()]), 
+   .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
   Categories: a
     .model({
       name: a.string().required(),
       products: a.hasMany('ProductCategories', 'categoryId'),
     })
-    .authorization((allow) => [allow.publicApiKey()]), 
+    .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
 
   ProductCategories: a
     .model({
@@ -31,7 +31,7 @@ const schema = a.schema({
       product: a.belongsTo('Products', 'productId'),
       category: a.belongsTo('Categories', 'categoryId'),
     })
-    .authorization(allow => [allow.owner()]),
+    .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

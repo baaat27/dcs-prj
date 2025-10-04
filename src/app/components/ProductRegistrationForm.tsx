@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import { uploadData } from 'aws-amplify/storage';
-import type { Schema } from '../../../amplify/data/resource';
+import {type  Schema } from '../../../amplify/data/resource';
 
 // Amplifyクライアントを生成
 const client = generateClient<Schema>();
@@ -34,6 +34,8 @@ export default function ProductRegistrationForm() {
       if (typeof client.models.Categories == 'undefined') {
         console.log("OK")
       }
+      console.log("aaa")
+       console.log("test",client.models.Categories.list());
       console.log("デバッグ: client.models の内容:", client.models);
             if (!client.models.Categories) {
         console.error("エラー: Category モデルが client.models に存在しません。");
