@@ -58,13 +58,6 @@
               "isRequired": true,
               "attributes": []
             },
-            "owner": {
-              "name": "owner",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
             "name": {
               "name": "name",
               "isArray": false,
@@ -76,20 +69,13 @@
               "name": "price",
               "isArray": false,
               "type": "Int",
-              "isRequired": true,
+              "isRequired": false,
               "attributes": []
             },
             "description": {
               "name": "description",
               "isArray": false,
               "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "stock": {
-              "name": "stock",
-              "isArray": false,
-              "type": "Int",
               "isRequired": false,
               "attributes": []
             },
@@ -146,7 +132,7 @@
                 "rules": [
                   {
                     "allow": "public",
-                    "provider": "iam",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",
@@ -227,7 +213,7 @@
                 "rules": [
                   {
                     "allow": "public",
-                    "provider": "iam",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",

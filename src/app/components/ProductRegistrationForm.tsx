@@ -29,9 +29,19 @@ export default function ProductRegistrationForm() {
   // コンポーネントの初回読み込み時に、登録済みの全カテゴリを取得
   useEffect(() => {
     const fetchCategories = async () => {
+      // --- デバッグ開始 ---
+      console.log("デバッグ: client.models の内容:", client.models);
+            if (!client.models.Category) {
+        console.error("エラー: Category モデルが client.models に存在しません。");
+        console.error("利用可能なモデル:", Object.keys(client.models));
+        console.log(client.models.Category) 
+        console.log(client.models)
+        // return; // モデルがない場合はここで処理を中断
+      }
+      // --- デバッグ終了 ---
       try {
-        const { data: Category } = await client.models.Category.list(); 
-        setAllCategories(Category);
+        const { data: category } = await client.models.Category.list();
+        setAllCategories(category);
       } catch (error) {
         console.error("カテゴリの取得に失敗しました:", error);
       }
