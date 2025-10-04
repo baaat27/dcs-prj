@@ -2,7 +2,7 @@
 "use client";
 
 import { Amplify } from "aws-amplify";
-import config from '../../amplify_outputs.json';
+import config from '@/amplify_outputs.json';
 
 // Amplifyライブラリにバックエンドの設定情報を読み込ませる
 Amplify.configure(config, { ssr: true });

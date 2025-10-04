@@ -10,7 +10,7 @@ import type { Schema } from '../../../amplify/data/resource';
 const client = generateClient<Schema>();
 
 // 型定義をエイリアスとして宣言
-type Category = Schema['Category']['type'];
+type Category = Schema['Categories']['type'];
 
 export default function ProductRegistrationForm() {
   // フォームの各入力値を管理するState
@@ -28,19 +28,22 @@ export default function ProductRegistrationForm() {
 
   // コンポーネントの初回読み込み時に、登録済みの全カテゴリを取得
   useEffect(() => {
+    
     const fetchCategories = async () => {
       // --- デバッグ開始 ---
+      if (typeof client.models.Categories == 'undefined') {
+        console.log("OK")
+      }
       console.log("デバッグ: client.models の内容:", client.models);
-            if (!client.models.Category) {
+            if (!client.models.Categories) {
         console.error("エラー: Category モデルが client.models に存在しません。");
         console.error("利用可能なモデル:", Object.keys(client.models));
-        console.log(client.models.Category) 
-        console.log(client.models)
         // return; // モデルがない場合はここで処理を中断
       }
       // --- デバッグ終了 ---
+
       try {
-        const { data: category } = await client.models.Category.list();
+        const { data: category } = await client.models.Categories.list();
         setAllCategories(category);
       } catch (error) {
         console.error("カテゴリの取得に失敗しました:", error);
@@ -85,7 +88,7 @@ export default function ProductRegistrationForm() {
       const imageKey = uploadResult.path;
 
       // 2. 商品情報をDynamoDBに登録 (モデル名は複数形の'Products'を使用)
-      const { data: newProduct } = await client.models.Product.create({
+      const { data: newProduct } = await client.models.Products.create({
         name: productName,
         price: price,
         description: description,
@@ -97,7 +100,7 @@ export default function ProductRegistrationForm() {
       // 3. 商品と選択されたカテゴリを中間テーブルで紐付け
       await Promise.all(
         Array.from(selectedCategoryIds).map(categoryId =>
-          client.models.ProductCategory.create({
+          client.models.ProductCategories.create({
             productId: newProduct.id,
             categoryId: categoryId,
           })

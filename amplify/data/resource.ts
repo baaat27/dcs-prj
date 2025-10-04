@@ -3,31 +3,35 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
 const schema = a.schema({
-  Product: a
+  Products: a
     .model({
       name: a.string().required(),
       price: a.integer(),
       description: a.string(),
       imageKey: a.string(),
-      categories: a.hasMany('ProductCategory', 'productId'),
+      categories: a.hasMany('ProductCategories', 'productId'),
     })
-    .authorization(allow => [allow.publicApiKey()]),
-
-  Category: a
+    .authorization((allow) => [allow.publicApiKey()]), 
+  tests: a
+    .model({
+    test1: a.string(),
+    })
+   .authorization((allow) => [allow.publicApiKey()]), 
+  Categories: a
     .model({
       name: a.string().required(),
-      products: a.hasMany('ProductCategory', 'categoryId'),
+      products: a.hasMany('ProductCategories', 'categoryId'),
     })
-    .authorization(allow => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.publicApiKey()]), 
 
-  ProductCategory: a
+  ProductCategories: a
     .model({
       productId: a.id().required(),
       categoryId: a.id().required(),
-      product: a.belongsTo('Product', 'productId'),
-      category: a.belongsTo('Category', 'categoryId'),
+      product: a.belongsTo('Products', 'productId'),
+      category: a.belongsTo('Categories', 'categoryId'),
     })
-    .authorization(allow => [allow.publicApiKey()]),
+    .authorization(allow => [allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

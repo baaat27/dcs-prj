@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "ap-northeast-3_o3WOeKWGp",
+    "user_pool_id": "ap-northeast-3_GWP84PWSD",
     "aws_region": "ap-northeast-3",
-    "user_pool_client_id": "5r5v4cuvdd9k0tkanvfd7bdeko",
-    "identity_pool_id": "ap-northeast-3:8567bf26-683f-4a17-ba35-95d82e395d63",
+    "user_pool_client_id": "l7bjm6p3hpkvl7smpfso79489",
+    "identity_pool_id": "ap-northeast-3:f8315c1b-45cd-4a7d-aff9-b944eae6ad6b",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -37,9 +37,9 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://k7io6vmvzba7nlpis7qaovd73u.appsync-api.ap-northeast-3.amazonaws.com/graphql",
+    "url": "https://6fse2dc6jzcplc3ibe3vscquz4.appsync-api.ap-northeast-3.amazonaws.com/graphql",
     "aws_region": "ap-northeast-3",
-    "api_key": "da2-hwafqzy4kva2bex6cup5ofqewa",
+    "api_key": "da2-xk36vxpx3na3tbwfdjwoef55ty",
     "default_authorization_type": "API_KEY",
     "authorization_types": [
       "AMAZON_COGNITO_USER_POOLS",
@@ -48,8 +48,8 @@
     "model_introspection": {
       "version": 1,
       "models": {
-        "Product": {
-          "name": "Product",
+        "Products": {
+          "name": "Products",
           "fields": {
             "id": {
               "name": "id",
@@ -90,7 +90,7 @@
               "name": "categories",
               "isArray": true,
               "type": {
-                "model": "ProductCategory"
+                "model": "ProductCategories"
               },
               "isRequired": false,
               "attributes": [],
@@ -150,8 +150,73 @@
             "sortKeyFieldNames": []
           }
         },
-        "Category": {
-          "name": "Category",
+        "tests": {
+          "name": "tests",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "test1": {
+              "name": "test1",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "tests",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "public",
+                    "provider": "apiKey",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "Categories": {
+          "name": "Categories",
           "fields": {
             "id": {
               "name": "id",
@@ -171,7 +236,7 @@
               "name": "products",
               "isArray": true,
               "type": {
-                "model": "ProductCategory"
+                "model": "ProductCategories"
               },
               "isRequired": false,
               "attributes": [],
@@ -231,8 +296,8 @@
             "sortKeyFieldNames": []
           }
         },
-        "ProductCategory": {
-          "name": "ProductCategory",
+        "ProductCategories": {
+          "name": "ProductCategories",
           "fields": {
             "id": {
               "name": "id",
@@ -259,7 +324,7 @@
               "name": "product",
               "isArray": false,
               "type": {
-                "model": "Product"
+                "model": "Products"
               },
               "isRequired": false,
               "attributes": [],
@@ -274,7 +339,7 @@
               "name": "category",
               "isArray": false,
               "type": {
-                "model": "Category"
+                "model": "Categories"
               },
               "isRequired": false,
               "attributes": [],
@@ -314,8 +379,10 @@
               "properties": {
                 "rules": [
                   {
-                    "allow": "public",
-                    "provider": "apiKey",
+                    "provider": "userPools",
+                    "ownerField": "owner",
+                    "allow": "owner",
+                    "identityClaim": "cognito:username",
                     "operations": [
                       "create",
                       "update",
@@ -337,6 +404,31 @@
       "enums": {},
       "nonModels": {}
     }
+  },
+  "storage": {
+    "aws_region": "ap-northeast-3",
+    "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-msex7ugnkgje",
+    "buckets": [
+      {
+        "name": "product-images",
+        "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-msex7ugnkgje",
+        "aws_region": "ap-northeast-3",
+        "paths": {
+          "images/*": {
+            "guest": [
+              "get",
+              "list"
+            ],
+            "authenticated": [
+              "get",
+              "list",
+              "write",
+              "delete"
+            ]
+          }
+        }
+      }
+    ]
   },
   "version": "1.4"
 }

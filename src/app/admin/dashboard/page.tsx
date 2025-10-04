@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import ProtectedRoute from "../../components/ProtectedRoute";
 
 export default function DashboardPage() {
   const [productName, setProductName] = useState('');
@@ -47,7 +46,6 @@ export default function DashboardPage() {
   };
 
   return (
-    <ProtectedRoute requiredGroup="admin">
     <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
       <h1>管理者ダッシュボード</h1>
       <p>ここから新しい商品を追加できます。</p>
@@ -89,6 +87,5 @@ export default function DashboardPage() {
         </button>
       </form>
     </div>
-    </ProtectedRoute>
   );
 }
