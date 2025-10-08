@@ -3,35 +3,30 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
 const schema = a.schema({
-  Products: a
+  Product: a
     .model({
       name: a.string().required(),
       price: a.integer(),
       description: a.string(),
       imageKey: a.string(),
-      categories: a.hasMany('ProductCategories', 'productId'),
+      categories: a.hasMany('ProductCategory', 'productId'),
     })
-    .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
-  tests: a
-    .model({
-    test1: a.string(),
-    })
-   .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
-  Categories: a
+    .authorization((allow) => [allow.publicApiKey()]),
+  Category: a
     .model({
       name: a.string().required(),
-      products: a.hasMany('ProductCategories', 'categoryId'),
+      products: a.hasMany('ProductCategory', 'categoryId'),
     })
-    .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
+    .authorization((allow) => [allow.publicApiKey()]),
 
-  ProductCategories: a
+  ProductCategory: a
     .model({
       productId: a.id().required(),
       categoryId: a.id().required(),
-      product: a.belongsTo('Products', 'productId'),
-      category: a.belongsTo('Categories', 'categoryId'),
+      product: a.belongsTo('Product', 'productId'),
+      category: a.belongsTo('Category', 'categoryId'),
     })
-    .authorization((allow) => [allow.owner(), allow.authenticated().to(['read','create'])]),
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

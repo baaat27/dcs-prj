@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "ap-northeast-3_GWP84PWSD",
+    "user_pool_id": "ap-northeast-3_aNJUXiOnl",
     "aws_region": "ap-northeast-3",
-    "user_pool_client_id": "l7bjm6p3hpkvl7smpfso79489",
-    "identity_pool_id": "ap-northeast-3:f8315c1b-45cd-4a7d-aff9-b944eae6ad6b",
+    "user_pool_client_id": "5gd32ec3bfqk90b09lolp5jv64",
+    "identity_pool_id": "ap-northeast-3:68140151-115a-452f-8053-d04748eb6f21",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -37,9 +37,9 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://6fse2dc6jzcplc3ibe3vscquz4.appsync-api.ap-northeast-3.amazonaws.com/graphql",
+    "url": "https://zk7vaz2mgrgkpimjbdygbg5ada.appsync-api.ap-northeast-3.amazonaws.com/graphql",
     "aws_region": "ap-northeast-3",
-    "api_key": "da2-xk36vxpx3na3tbwfdjwoef55ty",
+    "api_key": "da2-mkiijmomtvfxdneywbhcxwwalm",
     "default_authorization_type": "API_KEY",
     "authorization_types": [
       "AMAZON_COGNITO_USER_POOLS",
@@ -48,8 +48,8 @@
     "model_introspection": {
       "version": 1,
       "models": {
-        "Products": {
-          "name": "Products",
+        "Product": {
+          "name": "Product",
           "fields": {
             "id": {
               "name": "id",
@@ -90,7 +90,7 @@
               "name": "categories",
               "isArray": true,
               "type": {
-                "model": "ProductCategories"
+                "model": "ProductCategory"
               },
               "isRequired": false,
               "attributes": [],
@@ -131,22 +131,13 @@
               "properties": {
                 "rules": [
                   {
-                    "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
+                    "allow": "public",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",
                       "delete",
                       "read"
-                    ]
-                  },
-                  {
-                    "allow": "private",
-                    "operations": [
-                      "read",
-                      "create"
                     ]
                   }
                 ]
@@ -159,8 +150,8 @@
             "sortKeyFieldNames": []
           }
         },
-        "tests": {
-          "name": "tests",
+        "test": {
+          "name": "test",
           "fields": {
             "id": {
               "name": "id",
@@ -205,22 +196,13 @@
               "properties": {
                 "rules": [
                   {
-                    "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
+                    "allow": "public",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",
                       "delete",
                       "read"
-                    ]
-                  },
-                  {
-                    "allow": "private",
-                    "operations": [
-                      "read",
-                      "create"
                     ]
                   }
                 ]
@@ -233,8 +215,8 @@
             "sortKeyFieldNames": []
           }
         },
-        "Categories": {
-          "name": "Categories",
+        "Category": {
+          "name": "Category",
           "fields": {
             "id": {
               "name": "id",
@@ -254,7 +236,7 @@
               "name": "products",
               "isArray": true,
               "type": {
-                "model": "ProductCategories"
+                "model": "ProductCategory"
               },
               "isRequired": false,
               "attributes": [],
@@ -295,22 +277,13 @@
               "properties": {
                 "rules": [
                   {
-                    "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
+                    "allow": "public",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",
                       "delete",
                       "read"
-                    ]
-                  },
-                  {
-                    "allow": "private",
-                    "operations": [
-                      "read",
-                      "create"
                     ]
                   }
                 ]
@@ -323,8 +296,8 @@
             "sortKeyFieldNames": []
           }
         },
-        "ProductCategories": {
-          "name": "ProductCategories",
+        "ProductCategory": {
+          "name": "ProductCategory",
           "fields": {
             "id": {
               "name": "id",
@@ -351,7 +324,7 @@
               "name": "product",
               "isArray": false,
               "type": {
-                "model": "Products"
+                "model": "Product"
               },
               "isRequired": false,
               "attributes": [],
@@ -366,7 +339,7 @@
               "name": "category",
               "isArray": false,
               "type": {
-                "model": "Categories"
+                "model": "Category"
               },
               "isRequired": false,
               "attributes": [],
@@ -406,22 +379,13 @@
               "properties": {
                 "rules": [
                   {
-                    "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
+                    "allow": "public",
+                    "provider": "apiKey",
                     "operations": [
                       "create",
                       "update",
                       "delete",
                       "read"
-                    ]
-                  },
-                  {
-                    "allow": "private",
-                    "operations": [
-                      "read",
-                      "create"
                     ]
                   }
                 ]
@@ -441,11 +405,11 @@
   },
   "storage": {
     "aws_region": "ap-northeast-3",
-    "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-msex7ugnkgje",
+    "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-gdtiukaukjk4",
     "buckets": [
       {
         "name": "product-images",
-        "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-msex7ugnkgje",
+        "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-gdtiukaukjk4",
         "aws_region": "ap-northeast-3",
         "paths": {
           "images/*": {

@@ -14,7 +14,6 @@ export default function CreateCategoryForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-     console.log("利用可能なモデル:", client.models);
     if (!categoryName) {
       setError('カテゴリ名を入力してください。');
       return;
@@ -24,7 +23,7 @@ export default function CreateCategoryForm() {
 
     try {
       // APIからの返り値に 'errors' も含める
-      const { data: newCategory, errors } = await client.models.Categories.create({
+      const { data: newCategory, errors } = await client.models.Category.create({
         name: categoryName,
       });
 
