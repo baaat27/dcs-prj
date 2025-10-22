@@ -26,7 +26,7 @@ export default function SignIn() {
       if (groups.includes('admin')) {
         router.push('/admin/dashboard');
       } else if (groups.includes('user')) {
-        router.push('/user/profile');
+        router.push('/');
       } else {
         // グループに所属していない場合のデフォルトリダイレクト
         router.push('/');

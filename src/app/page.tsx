@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Styles from "./page.module.css";
 import Sidebar from "./components/layout/sidebar/page";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
 import ProductRegistrationForm from "./components/ProductRegistrationForm";
 import CreateCategoryForm from "./components/CreateCategoryForm";
+import DeleteCategory from "./components/DeleteCategory";
+import ProductList from "./components/ProductList";
+import DeleteProduct from "./components/DeleteProduct";
+import EditCategory from "./components/EditCategory";
+
 export default function Home() {
   return (
 
@@ -13,8 +16,12 @@ export default function Home() {
       <main className={Styles.main}>
       <ProductRegistrationForm />
       <CreateCategoryForm />
-      <SignIn />
-      <SignUp />
+      <ProductList />
+      <DeleteCategory />
+      <DeleteProduct />
+      <EditCategory />
+
+
       </main>
 
     </div>

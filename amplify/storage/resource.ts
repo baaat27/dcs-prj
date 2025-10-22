@@ -10,7 +10,7 @@ export const storage = defineStorage({
     // 'images/' フォルダ以下のすべてのファイルに対するルール
     'images/*': [
       // ゲスト（未ログインユーザー）には読み取り（read）のみを許可
-      allow.guest.to(['read']),
+      allow.guest.to(['read', 'write', 'delete']),
       // 認証済み（ログイン済み）ユーザーには、読み取り、書き込み、削除を許可
       allow.authenticated.to(['read', 'write', 'delete']),
     ],

@@ -1,9 +1,9 @@
 {
   "auth": {
-    "user_pool_id": "ap-northeast-3_aNJUXiOnl",
+    "user_pool_id": "ap-northeast-3_YKCw29qGW",
     "aws_region": "ap-northeast-3",
-    "user_pool_client_id": "5gd32ec3bfqk90b09lolp5jv64",
-    "identity_pool_id": "ap-northeast-3:68140151-115a-452f-8053-d04748eb6f21",
+    "user_pool_client_id": "1m5u89j0jsptuuogpj9ndn5o80",
+    "identity_pool_id": "ap-northeast-3:60fc635f-80e5-4b89-93cf-bf235efb531f",
     "mfa_methods": [],
     "standard_required_attributes": [
       "email"
@@ -37,12 +37,12 @@
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://zk7vaz2mgrgkpimjbdygbg5ada.appsync-api.ap-northeast-3.amazonaws.com/graphql",
+    "url": "https://x3gp6dosfzecnj7n7fjvftuii4.appsync-api.ap-northeast-3.amazonaws.com/graphql",
     "aws_region": "ap-northeast-3",
-    "api_key": "da2-mkiijmomtvfxdneywbhcxwwalm",
-    "default_authorization_type": "API_KEY",
+    "api_key": "da2-utlc3kgf6ndjvkydt3hojqwrmi",
+    "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
-      "AMAZON_COGNITO_USER_POOLS",
+      "API_KEY",
       "AWS_IAM"
     ],
     "model_introspection": {
@@ -121,71 +121,6 @@
           },
           "syncable": true,
           "pluralName": "Products",
-          "attributes": [
-            {
-              "type": "model",
-              "properties": {}
-            },
-            {
-              "type": "auth",
-              "properties": {
-                "rules": [
-                  {
-                    "allow": "public",
-                    "provider": "apiKey",
-                    "operations": [
-                      "create",
-                      "update",
-                      "delete",
-                      "read"
-                    ]
-                  }
-                ]
-              }
-            }
-          ],
-          "primaryKeyInfo": {
-            "isCustomPrimaryKey": false,
-            "primaryKeyFieldName": "id",
-            "sortKeyFieldNames": []
-          }
-        },
-        "test": {
-          "name": "test",
-          "fields": {
-            "id": {
-              "name": "id",
-              "isArray": false,
-              "type": "ID",
-              "isRequired": true,
-              "attributes": []
-            },
-            "test1": {
-              "name": "test1",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "createdAt": {
-              "name": "createdAt",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": [],
-              "isReadOnly": true
-            },
-            "updatedAt": {
-              "name": "updatedAt",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": [],
-              "isReadOnly": true
-            }
-          },
-          "syncable": true,
-          "pluralName": "tests",
           "attributes": [
             {
               "type": "model",
@@ -397,6 +332,80 @@
             "primaryKeyFieldName": "id",
             "sortKeyFieldNames": []
           }
+        },
+        "CartItem": {
+          "name": "CartItem",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "quantity": {
+              "name": "quantity",
+              "isArray": false,
+              "type": "Int",
+              "isRequired": true,
+              "attributes": []
+            },
+            "productId": {
+              "name": "productId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "CartItems",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "provider": "userPools",
+                    "ownerField": "owner",
+                    "allow": "owner",
+                    "identityClaim": "cognito:username",
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
         }
       },
       "enums": {},
@@ -405,17 +414,19 @@
   },
   "storage": {
     "aws_region": "ap-northeast-3",
-    "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-gdtiukaukjk4",
+    "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-vvx9oqybdtip",
     "buckets": [
       {
         "name": "product-images",
-        "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-gdtiukaukjk4",
+        "bucket_name": "amplify-dcsproject-bat29--productimagesbucket3dad8-vvx9oqybdtip",
         "aws_region": "ap-northeast-3",
         "paths": {
           "images/*": {
             "guest": [
               "get",
-              "list"
+              "list",
+              "write",
+              "delete"
             ],
             "authenticated": [
               "get",

@@ -11,7 +11,6 @@ const client = generateClient<Schema>();
 
 // 型定義をエイリアスとして宣言
 type Category = Schema['Category']['type'];
-console.log("利用可能なモデルss:", client.models);
 export default function ProductRegistrationForm() {
   // フォームの各入力値を管理するState
   const [productName, setProductName] = useState('');
@@ -61,8 +60,8 @@ export default function ProductRegistrationForm() {
   // フォーム送信時の処理
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!productName || !file || selectedCategoryIds.size === 0) {
-      alert('商品名、商品画像、最低1つのカテゴリは必須です。');
+    if (!productName || !file || !price) {
+      alert('商品名、商品画像、商品価格は必須です。');
       return;
     }
     setIsSubmitting(true);
